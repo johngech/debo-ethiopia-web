@@ -1,0 +1,42 @@
+name: Code Quality Enforcement
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+
+jobs:
+  quality-gate:
+    name: Lint, Clean & Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+
+      # LAYER 1: Biome (Syntax & Formatting)
+      - name: Run Biome Check
+        run: bun x @biomejs/biome check ./src
+
+      # LAYER 2: Knip (Dead Code & Unused Deps)
+      - name: Run Knip
+        run: bun x knip
+
+      # LAYER 3: SonarQube (Security & Logic)
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.qualitygate.wait=true
