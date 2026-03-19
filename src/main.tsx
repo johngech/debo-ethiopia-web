@@ -9,8 +9,6 @@ if (!rootElement) {
   throw new Error("Failed to find the root element. Check your index.html");
 }
 
-const x = 10;
-
 createRoot(rootElement).render(
   <StrictMode>
     <App />
