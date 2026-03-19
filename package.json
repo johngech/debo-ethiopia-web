@@ -5,13 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "bun x tsc -b && vite build",
     "lint:eslint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky",
     "lint": "biome check ./src",
     "lint:fix": "biome check --write ./src",
-    "check": "bun run lint && bun x knip"
+    "check:dead": "bun run lint && bun x knip"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",

@@ -1,73 +1,105 @@
-# React + TypeScript + Vite
+# 🛡️ Debo Ethiopia Web Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **Debo Ethiopia** frontend repository. This project is built with a high-performance 2026 tech stack focused on type-safety, speed, and automated code quality.
 
-Currently, two official plugins are available:
+-----
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Tech Stack
 
-## React Compiler
+  * **Runtime:** [Bun](https://bun.sh/) (Fastest JS all-in-one toolkit)
+  * **Framework:** React 19 + Vite
+  * **Styling:** Tailwind CSS v4 + daisyUI v5
+  * **Linter/Formatter:** Biome (Rust-based, replaces Prettier/ESLint)
+  * **Quality Gate:** SonarCloud + GitHub Actions
+  * **Dead Code Detection:** Knip
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-----
 
-## Expanding the ESLint configuration
+## 🛠️ Local Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Follow these steps to get your local environment running exactly like production.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 1\. Prerequisites (Install Bun)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Ensure you have **Bun v2.x** installed. This is our mandatory runtime and package manager.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**macOS & Linux:**
+
+```bash
+curl -fsSL https://bun.sh/install | bash
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Windows (Powershell):**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```powershell
+powershell -c "irm bun.sh/install.ps1 | iex"
 ```
+
+> **Important:** After installation, restart your terminal or run `source ~/.bashrc` (or `~/.zshrc`) to ensure the `bun` command is active. Verify by running `bun --version`.
+
+### 2\. Clone the Project
+
+```bash
+git clone https://github.com/johngech/debo-ethiopia-web.git
+cd debo-ethiopia-web
+```
+
+### 3\. Installation
+
+Install dependencies using the **frozen lockfile** to ensure every team member has the exact same environment:
+
+```bash
+bun install --frozen-lockfile
+```
+
+### 4\. Running the App
+
+Start the development server:
+
+```bash
+bun dev
+```
+
+The app will be available at: `http://localhost:5173`
+
+-----
+
+## 🧹 Code Standards & Workflow
+
+We use a "Zero-Tolerance" policy for messy code, enforced by **Husky** git hooks and a **Node.js 24** CI runner.
+
+### Useful Commands
+
+| Command | Purpose |
+| :--- | :--- |
+| `bun run lint:fix` | Automatically fix formatting and lint errors (Biome) |
+| `bun run check:dead` | Find unused files, exports, or dependencies (Knip) |
+| `bun run build` | Production build with Tailwind v4 JIT |
+
+### Git Workflow
+
+1.  **Commit**: When you commit, **Husky** will automatically run Biome. If it fails, the commit is blocked until you fix the errors.
+2.  **Push**: Every push triggers the **🛡️ Project Integrity** pipeline in GitHub Actions.
+3.  **SonarCloud**: Your PRs will be automatically audited. If you introduce "Code Smells" or "Vulnerabilities," the Quality Gate will fail.
+
+-----
+
+## 📡 CI/CD Pipeline
+
+Our GitHub Actions run on **Node.js 24**. If you modify the workflow, ensure you maintain the `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true` flag to avoid deprecation warnings.
+
+-----
+
+## 🎨 Design System
+
+We use **daisyUI v5**. Please use the built-in components to maintain design consistency:
+[Explore daisyUI Components](https://daisyui.com/components/)
+
+-----
+
+### Recommended Extensions
+
+To make development smoother, please install the following in VS Code:
+
+  * **Biome**: For instant linting and formatting on save.
+  * **Tailwind CSS IntelliSense**: For v4 utility class autocompletion.
