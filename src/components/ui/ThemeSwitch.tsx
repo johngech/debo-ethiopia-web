@@ -1,4 +1,4 @@
-import { LuSun, LuMoon } from "react-icons/lu";
+import { LuMoon, LuSun } from "react-icons/lu";
 
 const ThemeSwitch = () => {
   return (

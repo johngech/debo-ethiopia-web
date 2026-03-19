@@ -1,11 +1,11 @@
-echo "🚀 Starting Debo Ethiopia Quality Gate..."
+echo "🚀 Start checking code quality..."
 
 # 1. Biome: Fast Linting & Auto-Formatting
-echo "🔍 [1/3] Biome: Checking syntax and applying auto-formats..."
-if bun x @biomejs/biome check --staged --write ./src; then
-    echo "✨ Biome: Linting and formatting passed!"
+echo "🔍 [1/2] lint-staged: Auto-fixing only your staged changes..."
+if bun x lint-staged; then
+    echo "✨ Staged files cleaned and re-added automatically!"
 else
-    echo "❌ Biome: Found issues. Please fix them before committing."
+    echo "❌ Lint-staged failed. Check for unfixable errors and run bun run lint:fix."
     exit 1
 fi
 
