@@ -1,5 +1,5 @@
 import { AiOutlineSearch } from "react-icons/ai";
-import { Input, ThemeSwitch } from "./components/ui";
+import { Input, Select, ThemeSwitch } from "./components/ui";
 
 const App = () => {
   return (
@@ -13,6 +13,17 @@ const App = () => {
         className="my-3"
         errorText="Error message..."
       />
+      <div className="max-w-50">
+        <Select
+          options={[
+            { label: "Select...", value: "" },
+            { label: "A", value: 1 },
+            { label: "B", value: 2 },
+            { label: "C", value: 3 },
+            { label: "D", value: 4 },
+          ]}
+        />
+      </div>
     </div>
   );
 };
