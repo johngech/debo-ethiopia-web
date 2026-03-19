@@ -1,0 +1,42 @@
+name: Code Quality Enforcement
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  quality-gate:
+    name: Quality Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛰️ Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 👈 SonarCloud needs this for "Git Blame" data
+
+      - name: 🍞 Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: 📦 Install Dependencies
+        run: bun install --frozen-lockfile
+
+      - name: 🔍 Biome Check
+        run: bun x @biomejs/biome check ./src
+
+      - name: ✂️ Knip Check
+        run: bun x knip
+
+      - name: 🚀 SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io # 👈 Explicitly set this to avoid "undefined scheme"
+        with:
+          args: >
+            -Dsonar.qualitygate.wait=true
