@@ -1,13 +1,18 @@
-import { Button, ThemeSwitch } from "./components/ui";
+import { AiOutlineSearch } from "react-icons/ai";
+import { Input, ThemeSwitch } from "./components/ui";
 
 const App = () => {
   return (
-    <div>
-      <h1 className="text-2xl text-red-500">Hello react</h1>
-      <Button isLoading={true} variant={"primary"}>
-        Button
-      </Button>
+    <div className="m-10">
       <ThemeSwitch />
+      <Input
+        label="Search"
+        placeholder="Search products..."
+        leftIcon={<AiOutlineSearch size={18} />}
+        rightIcon={<kbd className="kbd kbd-sm">⌘K</kbd>}
+        className="my-3"
+        errorText="Error message..."
+      />
     </div>
   );
 };
