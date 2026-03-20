@@ -1,21 +1,18 @@
 import { type ReactNode, useId } from "react";
-import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { Outlet } from "react-router-dom";
 import { mergeClassName } from "../ui";
 
 interface BaseLayoutProps {
-  navbar?: ReactNode; // Desktop right-side content
-  mobileNavbar?: ReactNode; // Mobile right-side content
-  sidebar?: ReactNode; // Sidebar menu items
-  footer?: ReactNode; // Footer content
-  logo?: ReactNode; // Brand element
-  className?: string; // Custom classes for main content
-  showSidebar?: boolean; // Toggle sidebar visibility logic
+  navbar?: ReactNode;
+  sidebar?: ReactNode;
+  footer?: ReactNode;
+  logo?: ReactNode;
+  className?: string;
+  showSidebar?: boolean;
 }
 
 export const BaseLayout = ({
   navbar,
-  mobileNavbar,
   sidebar,
   footer,
   logo = "My App",
@@ -23,6 +20,20 @@ export const BaseLayout = ({
   showSidebar = !!sidebar,
 }: BaseLayoutProps) => {
   const drawerId = useId();
+
+  /**This is the mobile menu button that needs to be injected into the Navbar
+   import { HiOutlineMenuAlt2 } from "react-icons/hi";
+    It must be refactored and externalize later
+  const MobileToggle = showSidebar ? (
+    <label
+      htmlFor={drawerId}
+      className="btn btn-ghost btn-square lg:hidden"
+      aria-label="open sidebar"
+    >
+      <HiOutlineMenuAlt2 size={24} />
+    </label>
+  ) : null;
+   **/
 
   return (
     <div
@@ -34,46 +45,7 @@ export const BaseLayout = ({
       <input id={drawerId} type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-content flex flex-col min-w-0">
-        <header className="navbar w-full bg-base-100 border-b border-base-300 px-4 sticky top-0 z-30 gap-2">
-          {/* Navbar Start: Toggles & Mobile Logo */}
-          <div className="navbar-start w-auto lg:flex-1">
-            {showSidebar && (
-              <label
-                htmlFor={drawerId}
-                className="btn btn-ghost btn-square lg:hidden mr-2"
-                aria-label="open sidebar"
-              >
-                <HiOutlineMenuAlt2 size={24} />
-              </label>
-            )}
-
-            {/* Logo: Visible on Mobile, or on Desktop if no sidebar */}
-            <div
-              className={mergeClassName(
-                "font-bold text-xl transition-all",
-                showSidebar ? "lg:hidden" : "block",
-              )}
-            >
-              {logo}
-            </div>
-          </div>
-
-          {/* Navbar Center: Great for Search bars or Breadcrumbs */}
-          <div className="navbar-center hidden lg:flex">
-            {/* Optional: We can add a 'centerContent' prop here later if needed */}
-          </div>
-
-          {/* Navbar End: Configurable actions per device */}
-          <div className="navbar-end flex-1 justify-end gap-2">
-            {/* Desktop Actions */}
-            <div className="hidden md:flex items-center gap-2">{navbar}</div>
-
-            {/* Externally Configured Mobile Actions */}
-            <div className="flex md:hidden items-center gap-1">
-              {mobileNavbar}
-            </div>
-          </div>
-        </header>
+        {navbar}
 
         {/* Content Area */}
         <main className={mergeClassName("p-4 md:p-8 grow w-full", className)}>
