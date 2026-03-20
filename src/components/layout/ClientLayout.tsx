@@ -1,28 +1,39 @@
-import { ThemeSwitch } from "../ui";
+import { HiOutlineHome, HiOutlineUser } from "react-icons/hi";
+import { Link, ThemeSwitch } from "../ui";
 import { BaseLayout } from "./BaseLayout";
+import { Navbar } from "./Navbar";
 
 export const ClientLayout = () => {
   return (
     <BaseLayout
       logo="Debo"
-      navbar={<ClientNavbar />}
+      navbar={<MyDashboardNavbar />}
       sidebar={<h1>Sidebar</h1>}
-      footer={<LargeClientFooter />}
     />
   );
 };
 
-const ClientNavbar = () => {
-  return (
-    <div className="flex justify-between">
-      <span>Logo</span>
-      <div className="flex">
+// Example of a Dashboard Navbar configuration
+const MyDashboardNavbar = () => (
+  <Navbar
+    startContent={
+      <span className="font-bold text-lg hidden lg:block">Dashboard</span>
+    }
+    centerContent={
+      <>
+        <Link to="/" icon={<HiOutlineHome />}>
+          Home
+        </Link>
+        <Link to="/users" icon={<HiOutlineUser />}>
+          Users
+        </Link>
+      </>
+    }
+    endContent={
+      <div className="flex items-center gap-2">
+        {/*Profile dropdown or notification component goes here */}
         <ThemeSwitch />
       </div>
-    </div>
-  );
-};
-
-const LargeClientFooter = () => {
-  return <h2>Client Footer</h2>;
-};
+    }
+  />
+);
