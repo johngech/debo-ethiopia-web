@@ -14,19 +14,21 @@ export const Link = ({
 }: LinkProps) => {
   return (
     <NavLink
-      className={({ isActive, ...restProps }) =>
+      className={({ isActive }) =>
         mergeClassName(
-          "btn btn-ghost btn-sm normal-case gap-2",
-          isActive && "btn-active bg-base-200", // daisyUI active state
-          typeof className === "function"
-            ? className({ isActive: isActive, ...restProps })
-            : className,
+          "flex items-center gap-2 transition-all duration-200 ease-in-out rounded-lg",
+          "px-3 py-1.5 text-sm font-medium",
+          // Dropdown-friendly active states
+          isActive
+            ? "bg-primary/10 text-primary shadow-sm"
+            : "text-base-content/70 hover:text-primary hover:bg-primary/5",
+          className,
         )
       }
       {...otherProps}
     >
-      {icon && <span className="text-lg">{icon}</span>}
-      {children}
+      {icon}
+      {typeof children === "function" ? children : <span>{children}</span>}
     </NavLink>
   );
 };

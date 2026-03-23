@@ -27,17 +27,21 @@ export const Navbar = ({
         className,
       )}
     >
-      {/* Start Content: Breadcrumbs, Mobile Toggles, or Title
+      {/* Start Content: Breadcrumbs, Mobile Toggles, Logo, or Title
        */}
-      <div className="navbar-start gap-2">{startContent}</div>
+      {startContent && <div className="navbar-start gap-2">{startContent}</div>}
 
       {/* Center Content: Main Nav Links or Search
        */}
-      <div className="navbar-center hidden lg:flex gap-1">{centerContent}</div>
+      {centerContent && (
+        <div className="navbar-center hidden lg:flex gap-1">
+          {centerContent}
+        </div>
+      )}
 
       {/* End Content: Profile, Notifications, Theme Toggles
        */}
-      <div className="navbar-end gap-2">{endContent}</div>
+      {endContent && <div className="navbar-end gap-2">{endContent}</div>}
     </header>
   );
 };
