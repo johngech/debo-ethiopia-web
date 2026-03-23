@@ -5,7 +5,7 @@ import {
   LuSearch,
   LuUser,
 } from "react-icons/lu";
-import { Link, NavItem, NavUnderline } from "../ui";
+import { Link, Logo, NavItem, NavUnderline } from "../ui";
 import { Navbar } from "./Navbar";
 
 const navItems = [
@@ -49,14 +49,8 @@ const ClientNavbar = () => {
           </div>
 
           {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-2 px-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-content font-black">
-              D
-            </div>
-            <span className="hidden sm:inline-block text-xl font-bold tracking-tight">
-              Daisy<span className="text-primary">Dev</span>
-            </span>
-          </Link>
+
+          <Logo src="/src/assets/logo.png" />
         </>
       }
       centerContent={
