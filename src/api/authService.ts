@@ -9,7 +9,7 @@ export interface LoginRequest {
 
 export const authService = {
   login: async (credentials: LoginRequest) => {
-    const response = await baseApi.post("/auth/jwt/create/", credentials);
+    const response = await baseApi.post("/auth/jwt/create", credentials);
     tokenManager.setToken(response.data.access);
     return response.data;
   },
@@ -18,14 +18,14 @@ export const authService = {
   logout: async () => {
     tokenManager.clearToken();
     // must be the intercepted api request to clear session from the cookie
-    await api.post("/auth/logout/", {});
+    await api.post("/auth/logout", {});
     globalThis.location.href = "/login";
   },
 
   // Registration: Public endpoint, uses authApi
   register: async <T>(userData: T) => {
     try {
-      const response = await baseApi.post("/auth/users/", userData);
+      const response = await baseApi.post("/auth/users", userData);
       return response.data;
     } catch (error: any) {
       exceptionHandler.emit({
@@ -38,7 +38,7 @@ export const authService = {
 
   resetPassword: async (email: string) => {
     try {
-      const response = await baseApi.post("/auth/users/reset_password/", {
+      const response = await baseApi.post("/auth/users/reset_password", {
         email: email,
       });
       return response.data;

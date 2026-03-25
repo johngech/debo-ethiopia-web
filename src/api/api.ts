@@ -10,7 +10,7 @@ interface ExtendedAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
-const BASE_URL = import.meta.env.BASE_URL;
+const BASE_URL = "https://debo-ethiopia-api.onrender.com/api";
 
 const api: AxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -48,7 +48,7 @@ api.interceptors.response.use(
       try {
         const newToken = await requestManager.handleRefresh(async () => {
           const { data } = await baseApi.post(
-            "/auth/jwt/refresh/",
+            "/auth/jwt/refresh",
             {},
             { withCredentials: true },
           );
