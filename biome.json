@@ -17,6 +17,9 @@
       "correctness": {
         "noUnusedVariables": "error",
         "noUnusedFunctionParameters": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off"
       }
     }
   },

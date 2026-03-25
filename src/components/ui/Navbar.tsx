@@ -7,8 +7,12 @@ import {
   LuUser,
 } from "react-icons/lu";
 import { useSidebar } from "../../context";
-import { Link, Logo, NavItem, NavUnderline, ThemeSwitch } from "../ui";
-import { Navbar } from "./Navbar";
+import { NavbarLayout } from "../layout/NavbarLayout";
+import { Link } from "./Link";
+import { Logo } from "./Logo";
+import { NavItem } from "./NavItem";
+import { NavUnderline } from "./NavUnderline";
+import ThemeSwitch from "./ThemeSwitch";
 
 const navItems = [
   { label: "Home", link: "/home" },
@@ -32,11 +36,11 @@ const navItems = [
   { label: "About", link: "/about" },
 ];
 
-const ClientNavbar = () => {
+const Navbar = () => {
   const { hasSidebar, toggleVisibility } = useSidebar();
 
   return (
-    <Navbar
+    <NavbarLayout
       startContent={
         <>
           {/* Mobile Sidebar Toggle (if sidebar exists) */}
@@ -154,4 +158,4 @@ const NavLinks = (
   </>
 );
 
-export default ClientNavbar;
+export default Navbar;

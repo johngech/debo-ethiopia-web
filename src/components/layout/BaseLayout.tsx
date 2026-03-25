@@ -28,8 +28,7 @@ const BaseLayoutContent = ({
 
   return (
     <div className="flex flex-col h-screen bg-base-200 overflow-hidden">
-      {/* 1. Navbar stays outside the drawer to remain full-width and unpushed */}
-      <header className="sticky top-0 z-50 w-full flex-none">{navbar}</header>
+      <div className="sticky top-0 z-50 w-full flex-none">{navbar}</div>
       <div
         className={mergeClassName(
           "drawer flex-1 overflow-hidden antialiased transition-all duration-300",

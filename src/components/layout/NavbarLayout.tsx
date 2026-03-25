@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { mergeClassName } from "../ui/mergeClassName";
 
-interface NavbarProps {
+interface NavbarLayoutProps {
   startContent?: ReactNode;
   centerContent?: ReactNode;
   endContent?: ReactNode;
@@ -10,14 +10,14 @@ interface NavbarProps {
   className?: string;
 }
 
-export const Navbar = ({
+export const NavbarLayout = ({
   startContent,
   centerContent,
   endContent,
   sticky = true,
   glass = true,
   className,
-}: NavbarProps) => {
+}: NavbarLayoutProps) => {
   return (
     <header
       className={mergeClassName(

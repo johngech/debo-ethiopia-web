@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "imports": {
+    "@/*": "./src/*"
+  },
   "scripts": {
     "dev": "vite",
     "build": "bun x tsc -b && vite build",
@@ -15,6 +18,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
+    "axios": "^1.13.6",
     "clsx": "^2.1.1",
     "knip": "^5.88.0",
     "react": "^19.2.4",
@@ -22,7 +26,9 @@
     "react-icons": "^5.6.0",
     "react-router-dom": "^7.13.1",
     "tailwind-merge": "^3.5.0",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.2",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.8",

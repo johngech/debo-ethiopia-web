@@ -1,12 +1,11 @@
+import { Navbar, Sidebar } from "../ui";
 import { AdminMenu } from "../ui/AdminMenu";
-import { Sidebar } from "../ui/Sidebar";
 import { BaseLayout } from "./BaseLayout";
-import ClientNavbar from "./ClientNavbar";
 
 export const AdminLayout = () => {
   return (
     <BaseLayout
-      navbar={<ClientNavbar />}
+      navbar={<Navbar />}
       sidebar={
         <Sidebar>
           <AdminMenu />

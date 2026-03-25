@@ -27,7 +27,7 @@ export const Sidebar = ({ children, className }: SidebarProps) => {
 
       <div
         className={mergeClassName(
-          "menu p-4 min-h-full bg-base-100 text-base-content border-r border-base-300 transition-all duration-300 overflow-y-auto overflow-x-visible scrollbar-thin",
+          "menu p-4 min-h-full bg-base-100 text-base-content border-r border-base-300 transition-all duration-300",
           isCollapsed ? "w-20" : "w-80",
           className,
         )}
@@ -43,7 +43,11 @@ export const Sidebar = ({ children, className }: SidebarProps) => {
             onClick={toggleSidebar}
             className="btn btn-ghost btn-sm btn-circle"
           >
-            {isCollapsed ? <LuChevronRight /> : <LuChevronLeft />}
+            {isCollapsed ? (
+              <LuChevronRight size={30} />
+            ) : (
+              <LuChevronLeft size={30} />
+            )}
           </button>
         </div>
         <nav className="flex flex-col gap-1">{children}</nav>

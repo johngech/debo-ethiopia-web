@@ -17,13 +17,6 @@ export const AdminMenu = () => {
     <div className="flex flex-col gap-6 h-full">
       {/* Group 1: Management */}
       <section className="flex flex-col gap-1">
-        {!isCollapsed && (
-          <header className="px-4 mb-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-base-content/40">
-              Management
-            </span>
-          </header>
-        )}
         <SidebarItem
           to="/admin"
           icon={<LuLayoutDashboard color="red" />}
@@ -39,17 +32,7 @@ export const AdminMenu = () => {
           icon={<LuPackage />}
           label="Inventory"
         />
-      </section>
 
-      {/* Group 2: Security & Settings */}
-      <section className="flex flex-col gap-1">
-        {!isCollapsed && (
-          <header className="px-4 mb-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-base-content/40">
-              System
-            </span>
-          </header>
-        )}
         <SidebarItem
           to="/admin/roles"
           icon={<LuShieldCheck />}
