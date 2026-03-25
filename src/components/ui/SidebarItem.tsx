@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useLocation } from "react-router-dom";
-import { useSidebar } from "../layout/SidebarContext";
+import { useSidebar } from "../../context";
 import { Link, mergeClassName } from "../ui";
 
 interface SidebarItemProps {

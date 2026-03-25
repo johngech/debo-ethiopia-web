@@ -6,7 +6,7 @@ import {
   LuShieldCheck,
   LuUsers,
 } from "react-icons/lu";
-import { useSidebar } from "../layout/SidebarContext";
+import { useSidebar } from "../../context";
 import { mergeClassName } from "./mergeClassName";
 import { SidebarItem } from "./SidebarItem";
 

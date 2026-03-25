@@ -6,9 +6,9 @@ import {
   LuSearch,
   LuUser,
 } from "react-icons/lu";
+import { useSidebar } from "../../context";
 import { Link, Logo, NavItem, NavUnderline, ThemeSwitch } from "../ui";
 import { Navbar } from "./Navbar";
-import { useSidebar } from "./SidebarContext";
 
 const navItems = [
   { label: "Home", link: "/home" },

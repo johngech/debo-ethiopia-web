@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import { useSidebar } from "../layout/SidebarContext";
+import { useSidebar } from "../../context/SidebarProvider";
 import { mergeClassName } from "../ui";
 
 interface SidebarProps {
