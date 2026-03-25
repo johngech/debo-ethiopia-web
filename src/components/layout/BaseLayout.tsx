@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Outlet } from "react-router-dom";
-import { SidebarProvider, useSidebar } from "../../context/SidebarProvider";
+import { SidebarProvider, useSidebar } from "@/context";
 import { mergeClassName } from "../ui";
 
 interface BaseLayoutProps {

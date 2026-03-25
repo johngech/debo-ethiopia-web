@@ -1,3 +1,4 @@
+import type { IconType } from "react-icons/lib";
 import {
   LuLayoutDashboard,
   LuLogOut,
@@ -6,43 +7,23 @@ import {
   LuShieldCheck,
   LuUsers,
 } from "react-icons/lu";
-import { useSidebar } from "../../context";
-import { mergeClassName } from "./mergeClassName";
-import { SidebarItem } from "./SidebarItem";
+import { mergeClassName, SidebarItem } from "@/components/ui";
+import { useSidebar } from "@/context";
 
 export const AdminMenu = () => {
   const { isCollapsed } = useSidebar();
 
   return (
     <div className="flex flex-col gap-6 h-full">
-      {/* Group 1: Management */}
       <section className="flex flex-col gap-1">
-        <SidebarItem
-          to="/admin"
-          icon={<LuLayoutDashboard color="red" />}
-          label="Dashboard"
-        />
-        <SidebarItem
-          to="/admin/users"
-          icon={<LuUsers />}
-          label="User Registry"
-        />
-        <SidebarItem
-          to="/admin/products"
-          icon={<LuPackage />}
-          label="Inventory"
-        />
-
-        <SidebarItem
-          to="/admin/roles"
-          icon={<LuShieldCheck />}
-          label="Permissions"
-        />
-        <SidebarItem
-          to="/admin/settings"
-          icon={<LuSettings />}
-          label="Settings"
-        />
+        {sidebarItems.map((item) => (
+          <SidebarItem
+            key={item.href}
+            to={item.href}
+            label={item.label}
+            icon={<item.Icon />}
+          />
+        ))}
       </section>
 
       {/* Bottom Action */}
@@ -69,3 +50,17 @@ export const AdminMenu = () => {
     </div>
   );
 };
+
+type SidebarItemType = {
+  href: string;
+  label: string;
+  Icon: IconType;
+};
+
+const sidebarItems: SidebarItemType[] = [
+  { href: "/admin", label: "Dashboard", Icon: LuLayoutDashboard },
+  { href: "/admin/users", label: "User Registry", Icon: LuUsers },
+  { href: "/admin/products", label: "Inventory", Icon: LuPackage },
+  { href: "/admin/roles", label: "Permissions", Icon: LuShieldCheck },
+  { href: "/admin/settings", label: "Settings", Icon: LuSettings },
+];
