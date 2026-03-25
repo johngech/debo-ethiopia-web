@@ -1,7 +1,9 @@
 export { Button } from "./Button";
+export { ImageInput } from "./ImageInput";
 export { Input } from "./Input";
 export { Link } from "./Link";
 export { Logo } from "./Logo";
+export { MultipleImageInput } from "./MultipleImageInput";
 export { mergeClassName } from "./mergeClassName";
 export { default as Navbar } from "./Navbar";
 export { NavItem } from "./NavItem";

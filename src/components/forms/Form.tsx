@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 import type { z } from "zod";
 
-interface AppFormProps<T extends FieldValues> {
+interface FormProps<T extends FieldValues> {
   children: ReactNode;
   validationSchema: z.ZodType<T, any, any>;
   initialValues: DefaultValues<T>;
@@ -23,7 +23,7 @@ const Form = <T extends FieldValues>({
   initialValues,
   onSubmit,
   className,
-}: AppFormProps<T>) => {
+}: FormProps<T>) => {
   const methods = useForm<T>({
     defaultValues: initialValues,
     resolver: zodResolver(validationSchema),

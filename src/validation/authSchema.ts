@@ -11,6 +11,14 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
+const MAX_FILE_SIZE = 3000000; // 3MB
+const ACCEPTED_IMAGE_TYPES = new Set([
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+]);
+
 export const UserRegisterSchema = z
   .object({
     first_name: z.string().min(2, "First name is too short"),
@@ -20,6 +28,18 @@ export const UserRegisterSchema = z
     phone_number: z
       .string()
       .regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number format"),
+    image_url: z
+      .any()
+      .optional()
+      // We only run refinements IF a file was actually picked
+      .refine((files) => {
+        if (!files || files.length === 0) return true; // It's optional, so empty is fine
+        return files[0].size <= MAX_FILE_SIZE;
+      }, `Max file size is 3MB.`)
+      .refine((files) => {
+        if (!files || files.length === 0) return true;
+        return ACCEPTED_IMAGE_TYPES.has(files[0].type);
+      }, ".jpg, .jpeg, .png and .webp files are accepted."),
     password: passwordSchema,
     confirmPassword: z.string(),
   })
