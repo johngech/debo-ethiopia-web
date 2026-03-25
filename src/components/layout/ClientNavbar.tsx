@@ -2,11 +2,13 @@ import {
   LuChevronDown,
   LuGithub,
   LuMenu,
+  LuPanelLeft,
   LuSearch,
   LuUser,
 } from "react-icons/lu";
-import { Link, Logo, NavItem, NavUnderline } from "../ui";
+import { Link, Logo, NavItem, NavUnderline, ThemeSwitch } from "../ui";
 import { Navbar } from "./Navbar";
+import { useSidebar } from "./SidebarContext";
 
 const navItems = [
   { label: "Home", link: "/home" },
@@ -31,11 +33,24 @@ const navItems = [
 ];
 
 const ClientNavbar = () => {
+  const { hasSidebar, toggleVisibility } = useSidebar();
+
   return (
     <Navbar
       startContent={
         <>
-          {/* Mobile Dropdown Trigger */}
+          {/* Mobile Sidebar Toggle (if sidebar exists) */}
+          {hasSidebar && (
+            <button
+              type="button"
+              onClick={toggleVisibility}
+              className="btn btn-ghost hover:bg-primary/5 px-2 cursor-pointer"
+            >
+              <LuPanelLeft className="text-xl" />
+            </button>
+          )}
+
+          {/* Mobile Menu Dropdown (NavLinks) */}
           <div className="dropdown">
             <button
               type="button"
@@ -43,7 +58,7 @@ const ClientNavbar = () => {
             >
               <LuMenu className="text-xl" />
             </button>
-            <ul className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow-xl bg-base-100 rounded-box w-52 border border-base-300">
+            <ul className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow-xl bg-base-100 rounded-box w-52 border border-base-300">
               {NavLinks}
             </ul>
           </div>
@@ -67,6 +82,7 @@ const ClientNavbar = () => {
           >
             <LuSearch className="text-lg" />
           </button>
+          <ThemeSwitch />
 
           {/* Other Links */}
           <a

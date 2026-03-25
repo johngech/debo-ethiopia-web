@@ -1,82 +1,85 @@
-import { type ReactNode, useId } from "react";
+import { type ReactNode, useCallback, useId, useMemo, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { mergeClassName } from "../ui";
+import { SidebarContext } from "./SidebarContext";
 
 interface BaseLayoutProps {
   navbar?: ReactNode;
   sidebar?: ReactNode;
   footer?: ReactNode;
-  logo?: ReactNode;
   className?: string;
-  showSidebar?: boolean;
 }
 
 export const BaseLayout = ({
   navbar,
   sidebar,
   footer,
-  logo = "My App",
   className,
-  showSidebar = !!sidebar,
 }: BaseLayoutProps) => {
   const drawerId = useId();
+  // Initialize collapsed on mobile/tablet (less than 1024px)
+  const [isCollapsed, setIsCollapsed] = useState(
+    globalThis.window === undefined ? false : window.innerWidth < 1024,
+  );
+  // Initialize hidden on small devices (less than 768px)
+  const [isHidden, setIsHidden] = useState(
+    globalThis.window === undefined ? false : window.innerWidth < 768,
+  );
 
-  /**This is the mobile menu button that needs to be injected into the Navbar
-   import { HiOutlineMenuAlt2 } from "react-icons/hi";
-    It must be refactored and externalize later
-  const MobileToggle = showSidebar ? (
-    <label
-      htmlFor={drawerId}
-      className="btn btn-ghost btn-square lg:hidden"
-      aria-label="open sidebar"
-    >
-      <HiOutlineMenuAlt2 size={24} />
-    </label>
-  ) : null;
-   **/
+  const toggleSidebar = useCallback(() => setIsCollapsed((prev) => !prev), []);
+  const toggleVisibility = useCallback(() => setIsHidden((prev) => !prev), []);
+
+  const contextValue = useMemo(
+    () => ({
+      isCollapsed,
+      setIsCollapsed,
+      toggleSidebar,
+      isHidden,
+      setIsHidden,
+      toggleVisibility,
+      drawerId,
+      hasSidebar: !!sidebar,
+    }),
+    [isCollapsed, isHidden, drawerId, sidebar, toggleSidebar, toggleVisibility],
+  );
 
   return (
-    <div
-      className={mergeClassName(
-        "drawer min-h-screen bg-base-200 antialiased",
-        showSidebar && "lg:drawer-open",
-      )}
-    >
-      <input id={drawerId} type="checkbox" className="drawer-toggle" />
+    <SidebarContext.Provider value={contextValue}>
+      <div className="flex flex-col h-screen bg-base-200 overflow-hidden">
+        {/* 1. Navbar stays outside the drawer to remain full-width and unpushed */}
+        <header className="sticky top-0 z-50 w-full flex-none">{navbar}</header>
+        <div
+          className={mergeClassName(
+            "drawer flex-1 overflow-hidden antialiased transition-all duration-300",
+            sidebar && !isHidden && "drawer-open",
+          )}
+          style={{
+            ["--drawer-width" as string]: isCollapsed ? "5rem" : "20rem",
+          }}
+        >
+          <input id={drawerId} type="checkbox" className="drawer-toggle" />
 
-      <div className="drawer-content flex flex-col min-w-0">
-        {navbar}
+          {/* Content Area */}
+          <div className="drawer-content flex flex-col min-w-0 overflow-y-auto overflow-x-hidden">
+            <main
+              className={mergeClassName("p-4 md:p-8 grow w-full", className)}
+            >
+              <div className="max-w-400 mx-auto w-full">
+                <Outlet />
+              </div>
+            </main>
 
-        {/* Content Area */}
-        <main className={mergeClassName("p-4 md:p-8 grow w-full", className)}>
-          <div className="max-w-400 mx-auto w-full">
-            <Outlet />
+            {footer && (
+              <footer className="bg-base-100 border-t border-base-300 w-full flex-none">
+                <div className="max-w-7xl mx-auto">{footer}</div>
+              </footer>
+            )}
           </div>
-        </main>
 
-        {footer && (
-          <footer className="bg-base-100 border-t border-base-300 w-full">
-            <div className="max-w-7xl mx-auto">{footer}</div>
-          </footer>
-        )}
+          {/* Sidebar Side */}
+          {sidebar}
+        </div>
       </div>
-
-      {/* Sidebar Side */}
-      {showSidebar && (
-        <aside className="drawer-side z-40">
-          <label
-            htmlFor={drawerId}
-            aria-label="close sidebar"
-            className="drawer-overlay"
-          ></label>
-          <div className="menu p-4 w-72 md:w-80 min-h-full bg-base-100 text-base-content border-r border-base-300">
-            <div className="px-4 py-6 mb-4 text-2xl font-black text-primary">
-              {logo}
-            </div>
-            <nav className="flex flex-col gap-2">{sidebar}</nav>
-          </div>
-        </aside>
-      )}
-    </div>
+    </SidebarContext.Provider>
   );
 };

@@ -1,20 +1,20 @@
+import { AdminMenu } from "../ui/AdminMenu";
+import { Sidebar } from "../ui/Sidebar";
 import { BaseLayout } from "./BaseLayout";
+import ClientNavbar from "./ClientNavbar";
 
-export const AdminLayout = () => (
-  <BaseLayout
-    logo="AdminPortal"
-    navbar={<AdminActions />}
-    sidebar={<AdminMenu />}
-    footer={<AdminFooter />}
-  />
-);
-
-const AdminActions = () => {
-  return <h1>Admin</h1>;
-};
-
-const AdminMenu = () => {
-  return <h1>Admin Menu</h1>;
+export const AdminLayout = () => {
+  return (
+    <BaseLayout
+      navbar={<ClientNavbar />}
+      sidebar={
+        <Sidebar>
+          <AdminMenu />
+        </Sidebar>
+      }
+      footer={<AdminFooter />}
+    />
+  );
 };
 
 const AdminFooter = () => {
