@@ -16,10 +16,10 @@ export const authService = {
 
   // Logout: Clear local state and optionally notify server
   logout: async () => {
-    tokenManager.clearToken();
     // must be the intercepted api request to clear session from the cookie
     await api.post("/auth/logout", {});
-    globalThis.location.href = "/login";
+    tokenManager.clearToken();
+    globalThis.location.href = "/auth";
   },
 
   // Registration: Public endpoint, uses authApi

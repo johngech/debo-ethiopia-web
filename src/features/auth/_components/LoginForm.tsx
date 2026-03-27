@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { LuLock, LuMail } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, FormField, SubmitButton } from "@/components/forms";
@@ -7,9 +8,11 @@ import { type LoginFormData, loginSchema } from "@/validation";
 const LoginForm = () => {
   const login = useAuthStore((selector) => selector.login);
   const navigate = useNavigate();
+  const client = useQueryClient();
   const handleLogin = async (data: LoginFormData) => {
     try {
       await login(data);
+      client.invalidateQueries({ queryKey: ["me"] });
       navigate("/admin");
     } catch (error) {
       console.log(error);

@@ -1,11 +1,5 @@
-import {
-  LuChevronDown,
-  LuGithub,
-  LuMenu,
-  LuPanelLeft,
-  LuSearch,
-  LuUser,
-} from "react-icons/lu";
+import { LuChevronDown, LuMenu, LuPanelLeft, LuSearch } from "react-icons/lu";
+import { useMe } from "@/hooks";
 import { useSidebar } from "../../context";
 import { NavbarLayout } from "../layout/NavbarLayout";
 import { Link } from "./Link";
@@ -26,6 +20,14 @@ const navItems = [
     ],
   },
   {
+    label: "Media",
+    link: "/media",
+    children: [
+      { label: "News", link: "/media/news" },
+      { label: "Blog", link: "/media/blog" },
+    ],
+  },
+  {
     label: "Tutorials",
     link: "/tutorials",
     children: [
@@ -38,6 +40,8 @@ const navItems = [
 
 const Navbar = () => {
   const { hasSidebar, toggleVisibility } = useSidebar();
+  const { data: user } = useMe();
+  const isAuthenticated = !!user;
 
   return (
     <NavbarLayout
@@ -89,24 +93,30 @@ const Navbar = () => {
           <ThemeSwitch />
 
           {/* Other Links */}
-          <a
-            href="https://github.com"
-            target="_blank"
-            className="btn btn-ghost btn-circle btn-sm"
-            rel="noopener"
-          >
-            <LuGithub className="text-lg" />
-          </a>
+          {isAuthenticated && user?.role === "SUPER_ADMIN" && (
+            <NavItem>
+              <Link
+                to="/admin"
+                className="bg-transparent! shadow-none px-0 py-0"
+              >
+                Admin
+                <NavUnderline />
+              </Link>
+            </NavItem>
+          )}
 
           {/* Profile/CTA */}
-          <div className="divider divider-horizontal mx-1 hidden sm:flex h-6 self-center"></div>
-          <button
-            type="button"
-            className="btn btn-primary btn-sm px-4 rounded-full"
-          >
-            <LuUser className="text-lg mr-1" />
-            <span className="hidden sm:inline">Sign In</span>
-          </button>
+          {!isAuthenticated && (
+            <>
+              <div className="divider divider-horizontal mx-1 hidden sm:flex h-6 self-center"></div>
+              <Link
+                to={"/auth"}
+                className="btn btn-primary btn-sm px-4 rounded-full"
+              >
+                Login
+              </Link>
+            </>
+          )}
         </div>
       }
     />

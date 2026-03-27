@@ -7,12 +7,11 @@ import {
   LuShieldCheck,
   LuUsers,
 } from "react-icons/lu";
-import { mergeClassName, SidebarItem } from "@/components/ui";
+import { LogoutButton, mergeClassName, SidebarItem } from "@/components/ui";
 import { useSidebar } from "@/context";
 
 export const AdminMenu = () => {
   const { isCollapsed } = useSidebar();
-
   return (
     <div className="flex flex-col gap-6 h-full">
       <section className="flex flex-col gap-1">
@@ -35,16 +34,17 @@ export const AdminMenu = () => {
           )}
           data-tip={isCollapsed ? "Sign Out" : undefined}
         >
-          <button
+          <LogoutButton
             type="button"
             className={mergeClassName(
-              "flex w-full items-center gap-3 px-4 py-3 text-sm font-medium text-error hover:bg-error/10 rounded-xl transition-all duration-200",
+              "flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-sm font-medium text-error hover:bg-error/10 rounded-xl transition-all duration-200",
               isCollapsed && "justify-center px-0!",
             )}
+            variant="accent"
           >
             <LuLogOut className="text-xl" />
             {!isCollapsed && <span>Sign Out</span>}
-          </button>
+          </LogoutButton>
         </div>
       </div>
     </div>

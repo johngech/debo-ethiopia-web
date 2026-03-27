@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { AdminLayout, adminRoutes } from "@/features/admin";
 import { AuthLayout, authRoutes } from "@/features/auth";
 import { ClientLayout, clientRoutes } from "@/features/client";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
   // Client/Public Routes
@@ -10,8 +11,8 @@ export const router = createBrowserRouter([
   // Admin/Private Routes
   {
     path: "/admin",
-    element: <AdminLayout />,
-    children: adminRoutes,
+    element: <ProtectedRoute adminOnly={true} />,
+    children: [{ element: <AdminLayout />, children: adminRoutes }],
   },
   // This can be part of the client route
   {

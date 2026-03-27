@@ -1,8 +1,10 @@
 export { Button } from "./Button";
+export { default as FullScreenLoader } from "./FullScreenLoader";
 export { ImageInput } from "./ImageInput";
 export { Input } from "./Input";
 export { Link } from "./Link";
 export { Logo } from "./Logo";
+export { default as LogoutButton } from "./LogoutButton";
 export { MultipleImageInput } from "./MultipleImageInput";
 export { mergeClassName } from "./mergeClassName";
 export { default as Navbar } from "./Navbar";

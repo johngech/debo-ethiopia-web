@@ -2,6 +2,7 @@ import axios, {
   type AxiosInstance,
   type InternalAxiosRequestConfig,
 } from "axios";
+import { useAuthStore } from "@/store/useAuthStore";
 import { exceptionHandler } from "./ExceptionHandler";
 import { requestManager } from "./RequestManager";
 import { tokenManager } from "./TokenManager";
@@ -19,11 +20,13 @@ const api: AxiosInstance = axios.create({
 
 export const baseApi = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
 });
 
 // Intercept the request(the ingoing gatekeeper)
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use(async (config) => {
+  // Circuit breaker check
   if (!requestManager.canRequest()) {
     const errorMsg = "System is cooling down due to high traffic. Please wait.";
     exceptionHandler.emit({ message: errorMsg, type: "warning" });
@@ -45,6 +48,8 @@ api.interceptors.response.use(
     // Concurrent Token Refresh (Proxy Pattern)
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
+
+      // Otherwise, refresh token safely
       try {
         const newToken = await requestManager.handleRefresh(async () => {
           const { data } = await baseApi.post(
@@ -57,15 +62,16 @@ api.interceptors.response.use(
         });
 
         originalRequest.headers.Authorization = `JWT ${newToken}`;
+
         return api(originalRequest);
-      } catch (err) {
-        tokenManager.clearToken();
+      } catch (refreshError) {
+        await useAuthStore.getState().logout();
         exceptionHandler.emit({
           message: "Session expired. Please login again.",
           type: "error",
         });
-        globalThis.location.href = "/login";
-        throw err;
+        globalThis.location.href = "/auth"; // url must be refactored to /login or /auth/login
+        throw refreshError;
       }
     }
 
